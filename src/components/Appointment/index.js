@@ -10,8 +10,7 @@ import Show from "./Show";
 
 
 export default function Appointment(props) {
-  const showInterviews = props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer.name} /> : <Empty />
-
+  const showInterviews = props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer}  /> : <Empty />
   return (
     <>
     <Header time={props.time}/>
