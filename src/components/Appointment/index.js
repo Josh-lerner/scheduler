@@ -7,6 +7,8 @@ import Show from "./Show";
 import Form from "./Form"
 import Status from "./Status";
 import useVisualMode from "hooks/useVisualMode";
+import Confirm from "./Confirm"
+
 
 
 // var classNames = require('classnames');
@@ -18,6 +20,8 @@ export default function Appointment(props) {
   const CREATE = "CREATE";
   const SAVING = "SAVE";
   const DELETING = "DELETING";
+  const CONFIRM = "CONFIRM";
+
 
 
   const { mode, transition, back } = useVisualMode(
@@ -38,13 +42,16 @@ export default function Appointment(props) {
     };
     transition(SAVING);
     props.bookInterview(props.id, interview)
-      .then(() => transition(SHOW))
-
+    .then(() => transition(SHOW))
+    
   }
   function onDelete() {
-    transition(DELETING);
+    transition(CONFIRM)
+  }
+  function onConfirm(){
+    transition(DELETING)
     props.cancelInterview(props.id)
-      .then(() => transition(EMPTY))
+    .then(() => transition(EMPTY))
   }
 
   // const showInterviews = props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer} /> : <Empty />
@@ -55,29 +62,36 @@ export default function Appointment(props) {
         {mode === EMPTY && <Empty onAdd={onAdd} />}
         {mode === SHOW && (
           <Show
-            student={props.interview.student}
-            interview={props.interview.interviewer.name}
-            onDelete={onDelete}
-          />
-        )}
-        {mode === CREATE && (
-          <Form
-            interviewers={props.interviewers}
-            onCancel={onCancel}
-            onSave={save}
-          />
-        )}
-        {mode === SAVING && (
-          <Status
-            message="Saving"
-          />
-        )}
-        {mode === DELETING && (
-          <Status
-            message="Deleting"
-          />
-        )}
-      </article>
+        student={props.interview.student}
+        interviewer={props.interview.interviewersname}
+        onDelete={onDelete}
+      />
+    )}
+    {mode === CREATE && (
+      <Form 
+        interviewers={props.interviewers}
+        onCancel={onCancel}
+        onSave={save}
+      />
+    )}
+    {mode === SAVING && (
+      <Status
+        message="Saving"
+      />
+    )}
+    {mode === DELETING && (
+      <Status
+        message="Deleting"
+      />
+    )}
+    {mode === CONFIRM && (
+      <Confirm
+        onCancel={onCancel}
+        onConfirm={onConfirm}
+        message="Are you sure you would like to delete?"
+      />
+    )}
+  </article>
     </>
   )
 }
