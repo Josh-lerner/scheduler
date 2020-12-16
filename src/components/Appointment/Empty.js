@@ -11,6 +11,5 @@ export default function Empty(props) {
         onClick={props.onAdd}
       />
     </main>
-
-  )
-}
+  );
+};

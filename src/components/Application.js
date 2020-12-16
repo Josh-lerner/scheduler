@@ -14,23 +14,22 @@ export default function Application(props) {
     cancelInterview
   } = useApplicationData();
 
-  const interviewers = getInterviewersForDay(state, state.day); 
+  const interviewers = getInterviewersForDay(state, state.day);
   const appointments = getAppointmentsForDay(state, state.day);
 
   const schedule = appointments.map(
     appointment => {
-    return (
-      <Appointment 
-        key={appointment.id}
-        {...appointment}
-        interview={getInterview(state, appointment.interview)}
-        interviewers={interviewers}
-        bookInterview={bookInterview}
-        cancelInterview={cancelInterview}
-      />
-    );
-  }
-  );
+      return (
+        <Appointment
+          key={appointment.id}
+          {...appointment}
+          interview={getInterview(state, appointment.interview)}
+          interviewers={interviewers}
+          bookInterview={bookInterview}
+          cancelInterview={cancelInterview}
+        />
+      );
+    });
   return (
     <main className="layout">
       <section className="sidebar">
@@ -62,4 +61,4 @@ export default function Application(props) {
       </section>
     </main>
   );
-}
+};

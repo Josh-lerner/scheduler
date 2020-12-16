@@ -14,13 +14,10 @@ export default function DayList(props) {
       selected={day.name === props.day}
       setDay={props.setDay} 
       />
-  })
-
-
-
+  });
   return (
     <ul>
       { dayListItems}
     </ul>
   );
-}
+};

@@ -1,20 +1,20 @@
-import {useState} from 'react';
+import { useState } from 'react';
+// custom hook that manages state
+export default function useVisualMode(initial) {
+  const [mode, setMode] = useState(initial)
+  const [history, setHistory] = useState([initial]);
 
-export default function useVisualMode(initial){
-const [mode, setMode] = useState(initial)
-const [history, setHistory] = useState([initial]);
+  function transition(newMode, replace = false) {
+    setMode(newMode)
+    replace ? setHistory([...history]) : setHistory([...history, newMode])
+  };
 
-function transition(newMode, replace = false){
-setMode(newMode)
-replace ? setHistory([...history]) : setHistory([...history, newMode])
+  function back() {
+    const tempHistory = [...history];
+    tempHistory.pop();
+    setHistory(tempHistory)
+    tempHistory.length > 1 ? setMode(tempHistory[tempHistory.length - 1]) : setMode(initial)
+  };
 
-}
-function back(){
-  const tempHistory = [...history];
-  tempHistory.pop();
-  setHistory(tempHistory)
-  tempHistory.length > 1 ? setMode(tempHistory[tempHistory.length - 1]) : setMode(initial)
-}
-
-return ( { mode, transition, back } ) 
-}
+  return ({ mode, transition, back })
+};
