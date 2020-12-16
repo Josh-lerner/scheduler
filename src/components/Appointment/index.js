@@ -6,10 +6,10 @@ import Empty from "./Empty";
 import Show from "./Show";
 import Form from "./Form"
 import Status from "./Status";
-import useVisualMode from "hooks/useVisualMode";
 import Confirm from "./Confirm"
 import Error from "./Error"
 
+import useVisualMode from "hooks/useVisualMode";
 
 
 // var classNames = require('classnames');
@@ -65,12 +65,12 @@ export default function Appointment(props) {
   function onEdit() {
     transition(EDIT)
   }
-  // const showInterviews = props.interview ? <Show student={props.interview.student} interviewer={props.interview.interviewer} /> : <Empty />
   return (
     <>
       <Header time={props.time} />
       <article className="appointment" data-testid="appointment">
         {mode === EMPTY && <Empty onAdd={onAdd} />}
+
         {mode === SHOW && (
           <Show
         student={props.interview.student}
@@ -84,8 +84,6 @@ export default function Appointment(props) {
         interviewers={props.interviewers}
         onCancel={onCancel}
         onSave={save}
-        // name={props.interview.student}
-        // interviewer={props.interview.interviewer.id}
       />
     )}
     {mode === SAVING && (
@@ -107,11 +105,11 @@ export default function Appointment(props) {
     )}
     {mode === EDIT && (
       <Form
-      interviewers={props.interviewers}
+        interviewers={props.interviewers}
         onCancel={onCancel}
         onSave={save}
         name={props.interview.student}
-        interviewer={props.interview.interviewers}
+        interviewer={props.interview.interviewer.id}
         />
     )}
      {mode === ERROR_SAVE && (
